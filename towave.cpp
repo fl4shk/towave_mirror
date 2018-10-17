@@ -75,6 +75,7 @@ int main ( int argc, char** argv ) {
 		std::cout << "Proper syntax is" << std::endl;
 		std::cout << "\ttowave filename" << std::endl;
 		std::cout << "Where filename is of any type accepted by GME. (See readme)";
+		std::cout << std::endl;
 		return 0;
 	}
 	
