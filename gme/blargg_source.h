@@ -58,7 +58,7 @@ static inline void blargg_dprintf_( const char * fmt, ... )
 	vsnprintf_s( error, 511, 511, fmt, vl );
 	va_end(vl);
 	//OutputDebugStringA( error );
-	fprintf(stderr, "%s", error);
+	fprintf(stderr, "%s\n", error);
 }
 #undef  dprintf
 #define dprintf blargg_dprintf_
