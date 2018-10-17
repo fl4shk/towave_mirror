@@ -11,3 +11,5 @@ preprocs_debug/*
 */tags
 */types_*.taghl
 *.txt.ignore
+towave
+towave_debug
