@@ -1,5 +1,8 @@
 FL4SHK note:  this is simply a mirror of towave.
 
+See the "linux" branch for my very slightly modified version (to make it
+compile under Linux)
+
 Original README contents are as follows:
 
 towave - a program to extract the channels from a chiptune file
