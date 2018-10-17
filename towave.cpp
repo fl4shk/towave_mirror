@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
 
 
 std::string num2str(int x) {
@@ -66,21 +68,18 @@ void writeTheWave(gme_t* emu, int tracknum, int tracklen, int i, int sample_rate
 	wave_close();
 }
 
-int main ( int argc, char** argv ) {
-	std::string filename;
-	
-	if (argc > 1) filename = argv[argc - 1];
-	else {
-		std::cout << "Please call towave from the command prompt." << std::endl;
-		std::cout << "Proper syntax is" << std::endl;
-		std::cout << "\ttowave filename" << std::endl;
-		std::cout << "Where filename is of any type accepted by GME. (See readme)";
-		std::cout << std::endl;
-		return 0;
+int main(int argc, char** argv)
+{
+	if (argc != 4)
+	{
+		fprintf(stderr, "Usage:  %s filename tracknum tracklen\n",
+			argv[0]);
+		exit(1);
 	}
-	
+
+	const std::string filename(argv[1]);
 	gme_t* emu;
-	int sample_rate = 44100;
+	const int sample_rate = 44100;
 	const char* err1 = gme_open_file(filename.c_str(), &emu, sample_rate);
 	
 	if (err1) {
@@ -88,15 +87,19 @@ int main ( int argc, char** argv ) {
 		return 1;
 	}
 	
-	int tracknum, tracklen;
+	//int tracknum, tracklen;
 	
-	std::cout << "Track number (first track is 1): ";
-	std::cin >> tracknum;
-	tracknum--; //first track for GME is 0
-	std::cout << std::endl;
-	
-	std::cout << "How long to record, in seconds: ";
-	std::cin >> tracklen;
+	//std::cout << "Track number (first track is 1): ";
+	//std::cin >> tracknum;
+	//tracknum--; //first track for GME is 0
+	//std::cout << std::endl;
+	//
+	//std::cout << "How long to record, in seconds: ";
+	//std::cin >> tracklen;
+
+	const int tracknum = atoi(argv[2]) - 1;
+	const int tracklen = atoi(argv[3]);
+
 	
 	const char* err2 = gme_start_track(emu, tracknum);
 	if (err2) {
@@ -122,6 +125,63 @@ int main ( int argc, char** argv ) {
 	}
 	
 	gme_delete(emu);
-	
-	return 0;
 }
+//int main ( int argc, char** argv ) {
+//	std::string filename;
+//	
+//	if (argc > 1) filename = argv[argc - 1];
+//	else {
+//		std::cout << "Please call towave from the command prompt." << std::endl;
+//		std::cout << "Proper syntax is" << std::endl;
+//		std::cout << "\ttowave filename" << std::endl;
+//		std::cout << "Where filename is of any type accepted by GME. (See readme)";
+//		std::cout << std::endl;
+//		return 0;
+//	}
+//	
+//	gme_t* emu;
+//	int sample_rate = 44100;
+//	const char* err1 = gme_open_file(filename.c_str(), &emu, sample_rate);
+//	
+//	if (err1) {
+//		std::cout << err1;
+//		return 1;
+//	}
+//	
+//	int tracknum, tracklen;
+//	
+//	std::cout << "Track number (first track is 1): ";
+//	std::cin >> tracknum;
+//	tracknum--; //first track for GME is 0
+//	std::cout << std::endl;
+//	
+//	std::cout << "How long to record, in seconds: ";
+//	std::cin >> tracklen;
+//	
+//	const char* err2 = gme_start_track(emu, tracknum);
+//	if (err2) {
+//		std::cout << err2;
+//		return 1;
+//	}
+//	//Run the emulator for a second while muted to eliminate opening sound glitch
+//	for (int len = 0; len < 1000; len = gme_tell(emu)) {
+//		int m = -1;
+//		m ^= 1;
+//		gme_mute_voices(emu, m);
+//		short buf[1024];
+//		gme_play(emu, 1024, buf);
+//	}
+//	
+//	for (int i = 0; i < gme_voice_count(emu); i++) {
+//		const char* err = gme_start_track(emu, tracknum);
+//		if (err) {
+//			std::cout << err;
+//			return 1;
+//		}
+//		writeTheWave(emu, tracknum, tracklen, i, sample_rate);
+//	}
+//	
+//	gme_delete(emu);
+//	
+//	return 0;
+//}
