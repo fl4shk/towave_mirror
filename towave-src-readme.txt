@@ -1,3 +1,7 @@
+FL4SHK note:  this is simply a mirror of towave.
+
+Original README contents are as follows:
+
 towave - a program to extract the channels from a chiptune file
 (C) 2011 Bryan Mitchell (icesoldier)
 http://icesoldier.me/towave.html
