@@ -36,6 +36,7 @@ void writeTheWave(gme_t* emu, int tracknum, int tracklen, int i, int sample_rate
 	//long periods of silence. Unfortunately, this also means that
 	//if a track is of finite length, we still need to have its length separately.
 	gme_ignore_silence(emu, true);
+	//gme_ignore_silence(emu, false);
 	
 	//Create a muting mask to isolate the channel
 	int mute = -1;
@@ -81,11 +82,13 @@ int main(int argc, char** argv)
 	gme_t* emu;
 	const int sample_rate = 44100;
 	const char* err1 = gme_open_file(filename.c_str(), &emu, sample_rate);
+
 	
 	if (err1) {
 		std::cout << err1;
 		return 1;
 	}
+
 	
 	//int tracknum, tracklen;
 	
@@ -106,6 +109,8 @@ int main(int argc, char** argv)
 		std::cout << err2;
 		return 1;
 	}
+
+	gme_ignore_silence(emu, true);
 	//Run the emulator for a second while muted to eliminate opening sound glitch
 	for (int len = 0; len < 1000; len = gme_tell(emu)) {
 		int m = -1;
