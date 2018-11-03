@@ -30,10 +30,10 @@ std::string num2str(int x) {
 }
 
 void writeTheWave(gme_t* emu, int tracknum, int tracklen, int i, int sample_rate) {
-	//Ignoring silence allows us to record tracks that start in or have
-	//long periods of silence. Unfortunately, this also means that
-	//if a track is of finite length, we still need to have its length separately.
-	gme_ignore_silence(emu, true);
+	////Ignoring silence allows us to record tracks that start in or have
+	////long periods of silence. Unfortunately, this also means that
+	////if a track is of finite length, we still need to have its length separately.
+	//gme_ignore_silence(emu, true);
 	
 	//Create a muting mask to isolate the channel
 	int mute = -1;
@@ -102,6 +102,8 @@ int main ( int argc, char** argv ) {
 		std::cout << err2;
 		return 1;
 	}
+
+	gme_ignore_silence(emu, true);
 	//Run the emulator for a second while muted to eliminate opening sound glitch
 	for (int len = 0; len < 1000; len = gme_tell(emu)) {
 		int m = -1;
